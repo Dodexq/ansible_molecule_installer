@@ -1,0 +1,20 @@
+---
+- name: Set Facts
+  set_fact:
+    host_ips_consul_server: "{{ host_ips_consul_server | default([]) + [hostvars[item].ansible_host] }}"
+  when: item is match("^consul.*$")
+  loop: "{{ ansible_play_hosts_all }}"
+
+- name: Create Consul Server config
+  template:
+    src: '{{ consul_template_path}}/server.hcl.j2'
+    dest: '{{ consul_config_dir }}/server.hcl'
+    owner: consul
+    group: consul
+    mode: '0640'
+
+- name: Enable & Start Consul consul_servers
+  service:
+    name: consul
+    state: started
+    enabled: yes

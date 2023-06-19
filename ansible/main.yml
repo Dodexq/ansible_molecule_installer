@@ -13,6 +13,10 @@
         name: ansible-role-consul-tls-master
       when: not directory_check.stat.exists
 
+- hosts: all
+  roles:
+    - ansible-role-consul-base-install
+
 - hosts: consul_servers
   roles:
-    - base_install
+    - ansible-role-consul-server-install
