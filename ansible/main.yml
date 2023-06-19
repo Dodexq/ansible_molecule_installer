@@ -1,0 +1,18 @@
+- hosts: consul1
+  gather_facts: yes
+  
+  # preinstall
+  tasks:
+    - name: Check if directory exists
+      stat:
+        path: "{{ consul_tls_out_dir }}"
+      register: directory_check
+
+    - name: Create TLS Certificate if not exists
+      include_role:
+        name: ansible-role-consul-tls-master
+      when: not directory_check.stat.exists
+
+- hosts: consul_servers
+  roles:
+    - base_install

@@ -1,0 +1,6 @@
+ansible.log
+*.pem
+.vscode/
+.consul_tls/
+.vagrant/
+certs

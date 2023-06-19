@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Adriano Di Giovanni
+  description: Ansible role for generating self-signed OpenSSL certificates to be used by Consul for RPC encryption with TLS
+
+  license: MIT
+
+  min_ansible_version: 1.4
+
+  platforms:
+    - name: GenericLinux
+      versions:
+        - any
+
+  galaxy_tags:
+    - consul
+    - tls

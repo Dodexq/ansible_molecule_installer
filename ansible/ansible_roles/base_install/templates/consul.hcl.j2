@@ -1,0 +1,11 @@
+datacenter = "{{ consul_datacenter_name }}"
+data_dir = "{{ consul_data_dir }}"
+encrypt = "{{ consul_gossip_encrypt }}"
+
+ca_file = "{{ consul_config_dir }}/certs/ca.crt.pem"
+cert_file = "{{ consul_config_dir }}/certs/{{ consul_datacenter_name }}.consul.crt.pem"
+key_file = "{{ consul_config_dir }}/certs/{{ consul_datacenter_name }}.consul.key.pem"
+
+verify_incoming = true
+verify_outgoing = true
+verify_server_hostname = true

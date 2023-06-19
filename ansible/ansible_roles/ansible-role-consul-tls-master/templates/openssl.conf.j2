@@ -1,0 +1,35 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+dir = {{ consul_tls_out_dir | expanduser }}
+database = $dir/{{ consul_tls_database_file }}
+unique_subject = no
+new_certs_dir = $dir
+
+certificate = $dir/{{ consul_tls_ca_certificate_file }}
+serial = $dir/{{ consul_tls_serial_file }}
+private_key = $dir/{{ consul_tls_ca_private_key_file }}
+
+x509_extensions = consul_extensions
+
+default_days = {{ consul_tls_default_days }}
+default_md = sha256
+
+policy = policy_anything
+
+[ policy_anything ]
+countryName = optional
+stateOrProvinceName	= optional
+localityName = optional
+organizationName = optional
+organizationalUnitName = optional
+commonName = supplied
+emailAddress = optional
+
+[ consul_extensions ]
+basicConstraints = CA:false
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always
+keyUsage = digitalSignature,keyEncipherment
+extendedKeyUsage = serverAuth,clientAuth
