@@ -3,6 +3,28 @@
   
   # preinstall
   tasks:
+    - name: Download cfssl binary
+      get_url:
+        url: "https://pkg.cfssl.org/R1.2/cfssl_linux-amd64"
+        dest: "/usr/local/bin/cfssl"
+        mode: "0755"
+        
+    - name: Download cfssljson binary
+      get_url:
+        url: "https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64"
+        dest: "/usr/local/bin/cfssljson"
+        mode: "0755"
+        
+    - name: Set executable permissions
+      file:
+        path: "/usr/local/bin/cfssl"
+        mode: "0755"
+        
+    - name: Set executable permissions
+      file:
+        path: "/usr/local/bin/cfssljson"
+        mode: "0755"
+    
     - name: Check if directory exists
       stat:
         path: "{{ consul_tls_out_dir }}"
@@ -10,7 +32,7 @@
 
     - name: Create TLS Certificate if not exists
       include_role:
-        name: ansible-role-consul-tls-master
+        name: ansible-role-consul-ca
       when: not directory_check.stat.exists
 
 - hosts: all
