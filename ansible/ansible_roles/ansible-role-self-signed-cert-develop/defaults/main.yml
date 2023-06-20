@@ -3,7 +3,7 @@
 self_signed_cert_cfssl_url: https://github.com/cloudflare/cfssl/releases/download/v1.4.1/cfssl_1.4.1_linux_amd64
 self_signed_cert_cfssl_json_url: https://github.com/cloudflare/cfssl/releases/download/v1.4.1/cfssljson_1.4.1_linux_amd64
 
-self_signed_cert_dir: /etc/certs/
+self_signed_cert_dir: /vagrant/ansible/certs/
 
 self_signed_cert_profiles:
   - name: server
@@ -21,8 +21,8 @@ self_signed_cert_profiles:
       - client auth
 
 self_signed_cert_ca_certs:
-  - name: example-ca
-    cn: example.com
+  - name: "{{ consul_datacenter_name }}"
+    cn: server.dc1.consul
     key_algo: rsa
     key_size: 2048
     country: EU
@@ -35,12 +35,11 @@ self_signed_cert_ca_certs:
 self_signed_cert_certs:
   - name: server
     profile: server
-    ca_name: example-ca
+    ca_name: "{{ consul_datacenter_name }}"
     export_to_pfx: true
-    cn: example.com
+    cn: server.dc1.consul
     hosts:
-      - example.com
-      - www.example.com
+      - server.dc1.consul
     key_algo: rsa
     key_size: 2048
     country: EU
@@ -50,12 +49,11 @@ self_signed_cert_certs:
     state: internet
   - name: client
     profile: client
-    ca_name: example-ca
+    ca_name: "{{ consul_datacenter_name }}"
     export_to_pfx: true
-    cn: example.com
+    cn: server.dc1.consul
     hosts:
-      - example.com
-      - www.example.com
+      - server.dc1.consul
     key_algo: rsa
     key_size: 2048
     country: EU

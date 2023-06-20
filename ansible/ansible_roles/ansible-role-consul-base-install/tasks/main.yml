@@ -27,7 +27,7 @@
       dest: "{{ consul_cert_path }}"
       owner: consul
       group: consul
-      mode: '0640'
+      mode: '0740'
       directory_mode:
       remote_src: yes
     tags: test
@@ -38,4 +38,4 @@
       dest: '{{ consul_config_dir }}/consul.hcl'
       owner: consul
       group: consul
-      mode: '0640'
+      mode: '0740'

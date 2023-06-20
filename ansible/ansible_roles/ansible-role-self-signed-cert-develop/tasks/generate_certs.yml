@@ -6,8 +6,8 @@
     cfssl gencert \
       -ca={{ item.ca_name }}.pem \
       -ca-key={{ item.ca_name }}-key.pem \
-      -config=csr/ca-config.json \
-      -profile={{ item.profile }} csr/{{ item.name }}-csr.json | cfssljson -bare {{ item.name }} -
+      -config={{ self_signed_cert_dir }}csr/ca-config.json \
+      -profile={{ item.profile }} {{ self_signed_cert_dir }}csr/{{ item.name }}-csr.json | cfssljson -bare {{ item.name }} -
   args:
     chdir: "{{ self_signed_cert_dir }}"
     executable: /bin/bash

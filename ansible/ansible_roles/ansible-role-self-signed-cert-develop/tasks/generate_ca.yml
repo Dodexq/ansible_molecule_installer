@@ -1,9 +1,13 @@
 ---
+- name: Create directory if not exists
+  file:
+    path: "{{ self_signed_cert_dir }}"
+    state: directory
 
 - name: Create CA Certificate
   shell: |
     set -euxo pipefail
-    cfssl gencert -initca csr/{{ item.csr_file_name }} | cfssljson -bare {{ item.cert_file_name }} -
+    cfssl gencert -initca {{ self_signed_cert_dir }}csr/{{ item.csr_file_name }} | cfssljson -bare {{ item.cert_file_name }} -
   args:
     chdir: "{{ self_signed_cert_dir }}"
     executable: /bin/bash
