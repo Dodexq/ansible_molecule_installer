@@ -19,7 +19,6 @@
         host_ips_consul_server: "{{ host_ips_consul_server | default([]) + [hostvars[item].ansible_host] }}"
       when: item is match("^consul.*$")
       loop: "{{ ansible_play_hosts_all }}"
-  
   roles:
     - ansible-role-consul-base-install
 
@@ -30,3 +29,4 @@
 - hosts: consul_agents
   roles:
     - ansible-role-consul-agent-install
+    - ansible-role-consul-service-nginx-install
