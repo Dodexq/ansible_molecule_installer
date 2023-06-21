@@ -1,7 +1,7 @@
 - hosts: consul1
   gather_facts: yes
   
-  # preinstall
+  # First install directory_check if exists
   tasks:
     - name: Check if directory exists
       stat:
@@ -11,6 +11,7 @@
     - name: Create TLS Certificate
       include_role:
         name: ansible-role-self-signed-cert-develop
+      when: directory_check.stat.exists
 
 - hosts: all
   tasks:
