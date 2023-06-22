@@ -1,3 +1,4 @@
+---
 dependency:
   name: galaxy
 driver:
@@ -5,13 +6,13 @@ driver:
   provider:
     name: virtualbox
 lint: |
-  yamllint
-
+  yamllint .
+  ansible-lint .
 platforms:
-  - name: new-project-server
-    box: ubuntu/bionic64
+  - name: molecule_tests
+    box: geerlingguy/ubuntu2004
     instance_raw_config_args:
-      - "vm.network 'forwarded_port', guest: 80, host: 8088"
+      - "vm.synced_folder '/home/dodex/git/ansible_molecule_installer/', '/vagrant'"
 provisioner:
   name: ansible
   lint: |
@@ -19,4 +20,4 @@ provisioner:
 verifier:
   name: testinfra
   lint: |
-    flake8
+    yamllint
